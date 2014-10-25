@@ -51,14 +51,17 @@ app.controller('snapshotController', function ($scope, $log, model) {
     model.getSnapshots().then(function (response) {
       if (response.status === 204) {
         $scope.message = "No snapshots found";
+        $scope.snapshots = "";
       }
       else {
         $scope.snapshots = response.data;
+        $scope.message = "";
       }
       $('.fa-spin').hide();
     }, function (error) {
       $scope.message = "An error occurred loading snapshot directories from HDFS";
       $log.debug(error);
+      $scope.snapshots = "";
       $('.fa-spin').hide();
     });
   }
