@@ -1,0 +1,47 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+}
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+jar {
+  archiveName = "snapshot-view.jar"
+  version = '1.0.0-SNAPSHOT'
+}
+
+repositories {
+  jcenter()
+}
+
+configurations {
+  providedRuntime
+}
+
+dependencies {
+  compile "com.google.guava:guava:${guavaVersion}"
+  compile "javax.inject:javax.inject:1"
+  compile("org.apache.hadoop:hadoop-client:${hadoopVersion}") {
+    exclude(group: "com.sun.jersey")
+    exclude(group: "com.sun.jersey.contribs")
+  }
+  compile "org.glassfish.jersey.containers:jersey-container-jdk-http:${jerseyVersion}"
+  compile "org.glassfish.jersey.core:jersey-server:${jerseyVersion}"
+  compile "org.glassfish.jersey.media:jersey-media-moxy:${jerseyVersion}"
+  compile fileTree(dir: 'lib', includes: ['*.jar'])
+}
+
+jar {
+  doFirst {
+    into('WEB-INF/lib') { from configurations.compile }
+    into('/') { from 'src/main/webapp/static' }
+  }
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '2.1'
+}

@@ -1,0 +1,14 @@
+<view>
+  <name>HDFS-SNAPSHOT</name>
+  <label>HDFS Snapshots</label>
+  <version>0.1.0</version>
+  <parameter>
+    <name>fs.url</name>
+    <description>FileSystem URI</description>
+    <required>true</required>
+  </parameter>
+  <resource>
+    <name>snapshot</name>
+    <service-class>view.HdfsSnapshotResource</service-class>
+  </resource>
+</view>
